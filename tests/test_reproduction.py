@@ -15,7 +15,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from data import BudgetSampler, EvalDataset, UnifiedData, make_example
+from data import BudgetSampler, EvalDataset, TrainDataset, UnifiedData, make_example
 from eppm import ParallelExpertMGPT
 
 torch.set_num_threads(1)
@@ -73,13 +73,37 @@ class ReproductionTests(unittest.TestCase):
             self.assertEqual(int(data.test_dataset[0]["target"]), 5)
             self.assertEqual(int(data.test_dataset[0]["anchor_item"]), 4)
 
-    def test_historical_evaluation_window(self):
+    def test_shared_evaluation_window(self):
         sequence = list(range(1, 61))
         ds = EvalDataset({1: sequence}, {1: [1] * 60}, {1: [61]}, 50)
         batch = ds[0]
         self.assertEqual(batch["prefix_ids"].tolist(), list(range(11, 61)))
-        self.assertEqual(batch["pre_ids"].tolist(), list(range(10, 60)))
+        self.assertEqual(batch["pre_ids"].tolist(), [0] + list(range(11, 60)))
         self.assertEqual(int(batch["target"]), 61)
+
+    def test_shared_window_for_all_lengths(self):
+        for length in (1, 2, 49, 50, 51, 60, 120):
+            items = list(range(1, length + 1))
+            behaviors = [(index % 4) + 1 for index in range(length)]
+            batch = make_example(items, behaviors, length - 1, length + 1, 50, 1)
+            self.assertEqual(batch["pre_ids"][0].item(), 0)
+            self.assertTrue(torch.equal(batch["pre_ids"][1:], batch["prefix_ids"][:-1]))
+            self.assertTrue(torch.equal(batch["pre_behaviors"][1:], batch["prefix_behaviors"][:-1]))
+            self.assertEqual(batch["anchor_item"].item(), items[-1])
+            self.assertEqual(batch["anchor_behavior"].item(), behaviors[-1])
+
+    def test_training_window_unchanged(self):
+        items = list(range(1, 122))
+        behaviors = [(index % 4) + 1 for index in range(len(items))]
+        dataset = TrainDataset({1: items}, {1: behaviors}, 50)
+        for index in range(len(dataset)):
+            start = max(0, index - 49)
+            prefix = items[start:index + 1]
+            pre = items[start:index]
+            batch = dataset[index]
+            self.assertEqual(batch["prefix_ids"].tolist(), [0] * (50 - len(prefix)) + prefix)
+            self.assertEqual(batch["pre_ids"].tolist(), [0] * (50 - len(pre)) + pre)
+            self.assertEqual(batch["target"].item(), items[index + 1])
 
     def test_exact_parallel_expert_scoring(self):
         with tempfile.TemporaryDirectory() as directory:

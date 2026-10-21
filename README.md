@@ -6,6 +6,11 @@ Parallel-Expert implementation used for the **EPPM row of Table 2** on IJCAI,
 Yelp, and Retail. Baselines, transfer-backbone experiments, and ablations are
 not included.
 
+All data splits use one shared anchor-inclusive window of at most 50 events.
+The history-only branch receives its preceding at most 49 events; the anchor
+is supplied separately. This corrects the independently truncated evaluation
+views in the original implementation without changing training examples.
+
 ![EPPM framework](assets/framework.png)
 
 ## Contents
@@ -124,6 +129,8 @@ are `checkpoints/best.ckpt` and `checkpoints/last.ckpt`. IJCAI saves at its
 validation cadence, so interruption can require replaying unfinished work.
 Changing hardware, libraries, or resuming a run can affect exact numerical
 agreement; the release does not promise bitwise-identical retraining.
+Use a fresh output directory when switching from the original evaluation
+window to the shared-window version; do not resume across window policies.
 
 ## Results
 
@@ -137,6 +144,12 @@ EPPM results reported in Table 2:
 
 The unrounded reference metrics are stored in
 [results/table2_eppm.json](results/table2_eppm.json).
+These retain the original reported results. The current code uses the
+corrected shared window. Re-evaluating the original validation-best checkpoint
+leaves all four Yelp test metrics unchanged; Retail changes slightly
+(NDCG@20: 0.1102170050 to 0.1102158055). Detailed completed checks are in
+[results/shared_window_check.json](results/shared_window_check.json).
+These checks do not reselect checkpoints under corrected validation windows.
 
 Collect newly generated test results:
 
@@ -147,6 +160,8 @@ python scripts/collect_results.py --check
 
 Missing results are displayed as `TBD`; `--check` compares test outputs with
 the reference metrics at the reported precision.
+Small differences from the original reference values can therefore be flagged
+after the window correction; the check tolerance has not been relaxed.
 
 Run the CPU implementation tests:
 

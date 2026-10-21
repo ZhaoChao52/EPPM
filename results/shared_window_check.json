@@ -1,0 +1,25 @@
+{
+  "scope": "test-only re-evaluation of original validation-best checkpoints",
+  "checkpoint_selection": "original validation, not reselected under corrected window",
+  "window": "at most 50 anchor-inclusive events, split into at most 49 history events and anchor",
+  "completed": {
+    "yelp": {
+      "seed": 2025,
+      "checkpoint_epoch_zero_based": 51,
+      "checkpoint_sha256": "a70f72960bb7b615a3c6a2718448b100ae3fe2f8cb762f9481efb608222a4c1f",
+      "Recall@10": 0.06005050614476204,
+      "NDCG@10": 0.03167012333869934,
+      "Recall@20": 0.09601010382175446,
+      "NDCG@20": 0.04068921133875847
+    },
+    "retail": {
+      "seed": 2025,
+      "checkpoint_epoch_zero_based": 128,
+      "checkpoint_sha256": "e2518894cd90b8db645a02a77d67e23243ab7ca40f641e4542819f393c502a74",
+      "Recall@10": 0.16898588836193085,
+      "NDCG@10": 0.09818284958600998,
+      "Recall@20": 0.21660783886909485,
+      "NDCG@20": 0.11021580547094345
+    }
+  }
+}

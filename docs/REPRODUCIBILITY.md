@@ -33,10 +33,18 @@ validation and the final event for testing. Training targets precede both.
 The model receives observed item and behavior information, not the future
 target behavior. Evaluation ranks the full nonpadding item catalog.
 
-The evaluation loader independently truncates the anchor-inclusive and
-history-only evaluation views to 50 events. For long sequences, the latter
-can therefore contain one earlier event absent from the former. Training
-first clips the anchor-inclusive segment before constructing its two views.
+Training, validation, and testing first truncate the anchor-inclusive prefix
+to at most 50 events. The history-only view is the same window without its
+final anchor, giving at most 49 historical events. Thus neither EPPM branch
+accesses an event outside the native prefix window.
+
+The original evaluation loader independently truncated its two views, which
+could supply the history-only branch with one additional earlier event.
+The current implementation corrects this difference while preserving the
+original training examples and model architecture. Original reported metrics
+are retained as historical references. Completed fixed-checkpoint tests are
+recorded in `results/shared_window_check.json`; they do not constitute
+validation-based checkpoint reselection or completed retraining results.
 
 ## Checkpoints
 
@@ -53,7 +61,7 @@ validation-best model.
 
 ## Tests and Reference Results
 
-The CPU suite checks sampling, chronological splits, historical truncation,
+The CPU suite checks sampling, chronological splits, shared-window truncation,
 Parallel-Expert score construction, gate warmup gradients, padding exclusion,
 configuration budgets, and checkpoint resumption. These checks do not replace
 a complete retraining run on each dataset.

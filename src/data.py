@@ -15,10 +15,11 @@ def _pad_left(values, length):
 def make_example(items, behaviors, anchor_pos, target, max_len, user):
     assert 0 <= anchor_pos < len(items)
     assert target > 0
-    prefix_items = items[: anchor_pos + 1]
-    prefix_behaviors = behaviors[: anchor_pos + 1]
-    pre_items = items[:anchor_pos]
-    pre_behaviors = behaviors[:anchor_pos]
+    start = max(0, anchor_pos - max_len + 1)
+    prefix_items = items[start: anchor_pos + 1]
+    prefix_behaviors = behaviors[start: anchor_pos + 1]
+    pre_items = prefix_items[:-1]
+    pre_behaviors = prefix_behaviors[:-1]
     assert len(prefix_items) == len(prefix_behaviors)
     return {
         "user": torch.tensor(user, dtype=torch.long),
@@ -187,6 +188,7 @@ class UnifiedData:
         accumulation = int(config.get("accumulate_grad_batches", 1))
         self.stats = {
             "split_mode": "strict_v2",
+            "observation_window_policy": "anchor_inclusive_50_then_split_pre49_all_splits" if max_len == 50 else "truncate_anchor_inclusive_then_split",
             "train_users": len(legal_train),
             "legal_train_examples": len(self.train_dataset),
             "sampled_examples_per_epoch": int(config["samples_per_epoch"]),

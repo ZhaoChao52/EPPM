@@ -22,6 +22,7 @@ def digest_file(path):
 def load_config(dataset, output_dir=None):
     path = ROOT / "configs" / (dataset + ".yaml")
     config = yaml.safe_load(path.read_text())
+    config["observation_window_policy"] = "anchor_inclusive_50_then_split_pre49_all_splits"
     config["canonical_dataset_path"] = str(ROOT / config["canonical_dataset_path"])
     config["output_dir"] = str(output_dir.resolve() if output_dir else ROOT / config["output_dir"])
     return config
@@ -97,7 +98,8 @@ def main():
         raise FileNotFoundError(checkpoint)
     state = torch.load(checkpoint, map_location="cpu")
     selection = {"checkpoint": str(checkpoint), "sha256": digest_file(checkpoint),
-                 "epoch": state.get("epoch"), "global_step": state.get("global_step")}
+                 "epoch": state.get("epoch"), "global_step": state.get("global_step"),
+                 "evaluation_window_policy": config["observation_window_policy"]}
     del state
     (output / "test_checkpoint.json").write_text(json.dumps(selection, indent=2))
     trainer = build_trainer(config)

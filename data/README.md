@@ -26,9 +26,10 @@ target. The penultimate event is the validation target; the final event is the
 test target. Held-out future behavior is never passed to the model.
 Only unpickle trusted artifacts.
 
-Evaluation separately truncates the anchor-inclusive prefix
-and history-only view to `max_len`. Training clips the anchor-inclusive segment
-before constructing its two views.
+All splits first truncate the anchor-inclusive prefix to `max_len` and then
+remove its final event to construct the history-only view. With `max_len=50`,
+this yields at most 49 historical events and one separately supplied anchor.
+The native prefix and post-action branch therefore share the same event window.
 
 ## Identity Checks
 
