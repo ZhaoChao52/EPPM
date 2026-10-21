@@ -1,16 +1,13 @@
 # Data
 
-Training requires the frozen canonical dataset artifacts used in Table 2.
-The local project contains these files in `data/canonical/`. They are also
-packaged separately as `EPPM_datasets.zip`; the code archive excludes them.
-Extract the data archive into the repository root. It contains
-`data/canonical/{ijcai,yelp,retail}/dataset.pkl` and a copy of the manifest.
-No model checkpoints or public download link are included.
+Training requires the frozen datasets used in Table 2. A public download
+link is not yet available. If you have obtained `EPPM_datasets.zip`, extract it
+into the repository root to create
+`data/canonical/{ijcai,yelp,retail}/dataset.pkl`.
 
-The three files occupy approximately 314 MiB uncompressed. All three were
-checked against SHA256 values computed directly from the server artifacts.
-Before publishing the data archive, confirm the redistribution terms of each
-source. Locally prepared data do not imply public redistribution permission.
+The three files occupy approximately 314 MiB uncompressed. Full SHA256 values
+are recorded in [manifest.json](manifest.json). Dataset use and redistribution
+remain subject to the source terms.
 
 ## Format
 
@@ -29,10 +26,9 @@ target. The penultimate event is the validation target; the final event is the
 test target. Held-out future behavior is never passed to the model.
 Only unpickle trusted artifacts.
 
-The original evaluation code separately truncates the anchor-inclusive prefix
+Evaluation separately truncates the anchor-inclusive prefix
 and history-only view to `max_len`. Training clips the anchor-inclusive segment
-before constructing its two views. This packaging retains that historical
-behavior rather than silently changing the inputs used in the reported runs.
+before constructing its two views.
 
 ## Identity Checks
 

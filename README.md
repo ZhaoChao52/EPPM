@@ -15,7 +15,6 @@ not included.
 - [Usage](#usage)
 - [Results](#results)
 - [Repository Structure](#repository-structure)
-- [Citation](#citation)
 - [Acknowledgement](#acknowledgement)
 
 ## Requirements
@@ -37,13 +36,12 @@ pip install -r requirements.txt
 
 ## Data
 
-Use the same canonical datasets as the reported runs. The dataset format,
-checksums, and preparation procedure are documented in [data/README.md](data/README.md).
-The code archive excludes datasets and checkpoints. The separate
-`EPPM_datasets.zip` contains the three frozen datasets. Extract it inside this
-repository so that `data/canonical/` appears as shown below. The prepared local
-project already contains these files; no download is needed for local review.
-Public redistribution remains subject to the source dataset terms.
+Training requires the frozen datasets used in Table 2. Their format and
+SHA256 checksums are documented in [data/README.md](data/README.md).
+Datasets and checkpoints are not included in the Git repository. A public
+download link for the frozen data is not yet available.
+
+If you have obtained `EPPM_datasets.zip`, extract it into the repository root:
 
 On Linux:
 
@@ -137,9 +135,8 @@ EPPM results reported in Table 2:
 | Yelp | 0.06005 | 0.03167 | 0.09601 | 0.04069 |
 | Retail | 0.16901 | 0.09819 | 0.21661 | 0.11022 |
 
-The unrounded primary metrics are stored in
-[results/table2_eppm.json](results/table2_eppm.json). These are reference
-results, not outputs produced by installing the repository.
+The unrounded reference metrics are stored in
+[results/table2_eppm.json](results/table2_eppm.json).
 
 Collect newly generated test results:
 
@@ -148,8 +145,8 @@ python scripts/collect_results.py
 python scripts/collect_results.py --check
 ```
 
-Missing results remain `TBD`. The check compares actual test output against
-the reported precision and never substitutes the reference values.
+Missing results are displayed as `TBD`; `--check` compares test outputs with
+the reference metrics at the reported precision.
 
 Run the CPU implementation tests:
 
@@ -189,11 +186,5 @@ EPPM/
 ```
 
 See [Reproducibility](docs/REPRODUCIBILITY.md) for checkpoint selection,
-historical input-window behavior, and verification scope. The framework image
+input-window behavior, and tests. The framework image
 shows the general method; this repository implements only its M-GPT instance.
-
-## Citation
-
-This is an anonymous review artifact. Publication details and the public
-citation will be added after the review process. No acceptance, DOI, or public
-repository URL is implied.
