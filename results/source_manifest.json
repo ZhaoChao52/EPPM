@@ -1,0 +1,26 @@
+[
+  {
+    "file": "src/backbone.py",
+    "source_sha256": "ff593e9f15351f9c4ecad03c2f39fb3a01997de33ef623ea1f3a05bc2ec0d39e",
+    "release_sha256": "5a3767c43790b9f7ca6a473dd62fb9664dd66d70fbd412844744e9cfe40268ea",
+    "change": "comments and docstrings removed; executable structure retained"
+  },
+  {
+    "file": "src/data.py",
+    "source_sha256": "f7855db98ccda20edf93c6c0f9c79431fa9bf84e96d9cea73384d75a2d083df5",
+    "release_sha256": "f7855db98ccda20edf93c6c0f9c79431fa9bf84e96d9cea73384d75a2d083df5",
+    "change": "comments and docstrings removed; executable structure retained"
+  },
+  {
+    "file": "src/eppm.py",
+    "source_sha256": "eef0dfb7f6f81f0ed3d19328a4a9dfb68b23af7f497a96810e6632e25b620bcf",
+    "release_sha256": "cda724da2e74bf847182ce1847b45c1d3ea7dafba2d6996ccde7a2a1bf3d933f",
+    "change": "module import renamed; comments and docstrings removed"
+  },
+  {
+    "file": "src/trainer.py",
+    "change": "build_trainer extracted; imports normalized; comments and docstrings removed",
+    "source_function_sha256": "f86e2e8d9c5e52c004fb4b7c6d2091cba6566126eb5560521d9a2353e02a6175",
+    "release_sha256": "f2041e61182ac096a6631c4776c4ca8271535397f60041322d4240aa8b1009a4"
+  }
+]

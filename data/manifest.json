@@ -1,0 +1,206 @@
+{
+  "ijcai": {
+    "sha256": "c650c891da0e5b26a7c9d60bd48b7c23b8747f548a8b432a7984eed4bf77b428",
+    "num_items": 874328,
+    "num_behaviors": 4,
+    "statistics": {
+      "bmap": {
+        "buy": 2,
+        "cart": 1,
+        "fav": 4,
+        "pv": 3
+      },
+      "full_interactions": 36241700,
+      "full_seq_len_max": 6333,
+      "full_seq_len_mean": 85.59218559218559,
+      "full_seq_len_min": 4,
+      "leakage_audit": {
+        "held_out_events_in_training": false,
+        "status": "PASS by construction",
+        "training_targets": "strictly inside e1..e(T-2)"
+      },
+      "num_behaviors": 4,
+      "num_items": 874328,
+      "num_users_total": 423423,
+      "protocol": "ACPT strict-v2 canonical IJCAI",
+      "storage_semantics": {
+        "strict_v2_training_region": "e1..e(T-2)",
+        "test_target": "eT",
+        "train": "e1..e(T-1)",
+        "val": "eT",
+        "validation_target": "e(T-1)"
+      },
+      "test_behavior_counts": {
+        "1": 1205,
+        "2": 145858,
+        "3": 265133,
+        "4": 11227
+      },
+      "test_cases": 423423,
+      "test_users": 423423,
+      "train_behavior_counts": {
+        "1": 71598,
+        "2": 2665741,
+        "3": 29748488,
+        "4": 2909027
+      },
+      "train_examples": 34971431,
+      "train_users": 423423,
+      "val_behavior_counts": {
+        "1": 1470,
+        "2": 125017,
+        "3": 282057,
+        "4": 14879
+      },
+      "val_cases": 423423,
+      "val_users": 423423
+    }
+  },
+  "yelp": {
+    "sha256": "81c571cac401a456cc75304de5987bcbab31b4565a6de54bbe17cdfd1fe963d9",
+    "num_items": 22734,
+    "num_behaviors": 4,
+    "statistics": {
+      "bmap": {
+        "neg": 1,
+        "neutral": 2,
+        "pos": 3,
+        "tip": 4
+      },
+      "full_interactions": 1400002,
+      "full_seq_len_max": 2341,
+      "full_seq_len_mean": 70.70717171717172,
+      "full_seq_len_median": 49.0,
+      "full_seq_len_min": 7,
+      "leakage_audit": {
+        "dataset_train_semantics": "events e1..e(T-1); strict-v2 dataloader uses e1..e(T-2) for training examples and e(T-1) for validation",
+        "dataset_val_semantics": "event eT used only as strict-v2 test target",
+        "status": "PASS by construction",
+        "training_target_region": "inside e1..e(T-2) only after strict-v2 dataloader processing"
+      },
+      "num_behaviors": 4,
+      "num_items": 22734,
+      "num_users_total": 19800,
+      "protocol": "ACPT strict-v2 canonical Yelp from KHGT sparse timestamp matrices",
+      "same_timestamp_adjacent_pairs_after_sort": 188,
+      "source_files": {
+        "trn_neg": {
+          "behavior": "neg",
+          "behavior_id": 1,
+          "nnz": 198106,
+          "sha256": "34bd9a6328e232c327629cca947361e8d08f11e3e345f5a3d311550e2dd41bc1",
+          "shape": [
+            19800,
+            22734
+          ],
+          "size_bytes": 2456880
+        },
+        "trn_neutral": {
+          "behavior": "neutral",
+          "behavior_id": 2,
+          "nnz": 238880,
+          "sha256": "9545020cb677d3a46b60d01073fe4e4227bde0a849ff1b48f735caa3858a5607",
+          "shape": [
+            19800,
+            22734
+          ],
+          "size_bytes": 2946168
+        },
+        "trn_pos": {
+          "behavior": "pos",
+          "behavior_id": 3,
+          "nnz": 677343,
+          "sha256": "132fa486baec610a757e3b4906acb0a6d59c0a589f9ad74813fd17e175aea5a2",
+          "shape": [
+            19800,
+            22734
+          ],
+          "size_bytes": 8207724
+        },
+        "trn_tip": {
+          "behavior": "tip",
+          "behavior_id": 4,
+          "nnz": 285673,
+          "sha256": "8743a8923d3c1503a2cccd85b85b220e4fbe7566812a24449ba02976f18920ef",
+          "shape": [
+            19800,
+            22734
+          ],
+          "size_bytes": 3507684
+        }
+      },
+      "test_behavior_counts": {
+        "1": 4796,
+        "2": 2769,
+        "3": 9743,
+        "4": 2492
+      },
+      "test_cases": 19800,
+      "test_users": 19800,
+      "train_behavior_counts": {
+        "1": 188970,
+        "2": 233170,
+        "3": 657812,
+        "4": 280450
+      },
+      "train_examples": 1340602,
+      "train_seq_len_max": 2340,
+      "train_seq_len_mean": 69.70717171717172,
+      "train_seq_len_median": 48.0,
+      "train_seq_len_min": 6,
+      "train_users": 19800,
+      "val_behavior_counts": {
+        "1": 4340,
+        "2": 2941,
+        "3": 9788,
+        "4": 2731
+      },
+      "val_cases": 19800,
+      "val_users": 19800
+    }
+  },
+  "retail": {
+    "sha256": "806fee4b8e7d495c2f1f08df398ee10ac276bb1658d256abb29046f25092f0b5",
+    "num_items": 99037,
+    "num_behaviors": 4,
+    "statistics": {
+      "bmap": {
+        "buy": 4,
+        "cart": 1,
+        "fav": 2,
+        "pv": 3
+      },
+      "num_behaviors": 4,
+      "num_items": 99037,
+      "num_users_total": 147894,
+      "protocol": "ACPT strict-v2 canonical Retail from FatsMB-main dataset.pkl",
+      "test_behavior_counts": {
+        "1": 11431,
+        "2": 3696,
+        "3": 113427,
+        "4": 19340
+      },
+      "test_cases": 147894,
+      "test_users": 147894,
+      "train_behavior_counts": {
+        "1": 651414,
+        "2": 259703,
+        "3": 5844900,
+        "4": 607121
+      },
+      "train_examples": 7215244,
+      "train_seq_len_max": 426,
+      "train_seq_len_mean": 49.786590395824035,
+      "train_seq_len_min": 4,
+      "train_users": 147894,
+      "val_behavior_counts": {
+        "1": 11346,
+        "2": 3732,
+        "3": 116361,
+        "4": 16455
+      },
+      "val_cases": 147894,
+      "val_users": 147894
+    }
+  }
+}

@@ -1,0 +1,15 @@
+name: eppm
+channels:
+  - defaults
+dependencies:
+  - python=3.8.20
+  - pip
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu118
+      - torch==2.0.0+cu118
+      - pytorch-lightning==1.9.5
+      - torchmetrics==0.11.4
+      - numpy==1.24.3
+      - PyYAML==6.0.1
+      - tqdm==4.66.4
+      - packaging==24.1
