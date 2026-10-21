@@ -127,13 +127,9 @@ agreement; the release does not promise bitwise-identical retraining.
 
 ## Results
 
-EPPM results reported in Table 2:
+Overall full-item ranking performance (Table 2):
 
-| Dataset | Recall@10 | NDCG@10 | Recall@20 | NDCG@20 |
-|---|---:|---:|---:|---:|
-| IJCAI | 0.18659 | 0.11854 | 0.23479 | 0.13072 |
-| Yelp | 0.06005 | 0.03167 | 0.09601 | 0.04069 |
-| Retail | 0.16901 | 0.09819 | 0.21661 | 0.11022 |
+![Table 2: Overall full-item ranking performance](assets/table2.png)
 
 The unrounded reference metrics are stored in
 [results/table2_eppm.json](results/table2_eppm.json).
