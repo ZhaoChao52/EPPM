@@ -38,14 +38,6 @@ to at most 50 events. The history-only view is the same window without its
 final anchor, giving at most 49 historical events. Thus neither EPPM branch
 accesses an event outside the native prefix window.
 
-The original evaluation loader independently truncated its two views, which
-could supply the history-only branch with one additional earlier event.
-The current implementation corrects this difference while preserving the
-original training examples and model architecture. Original reported metrics
-are retained as historical references. Completed fixed-checkpoint tests are
-recorded in `results/shared_window_check.json`; they do not constitute
-validation-based checkpoint reselection or completed retraining results.
-
 ## Checkpoints
 
 Checkpoints are selected by validation NDCG@20. The training entry point tests
