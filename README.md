@@ -36,8 +36,15 @@ data/canonical/
   retail/dataset.pkl
 ```
 
-Data format and checksums: [data/README.md](data/README.md).
-The dataset download link is not yet available.
+Upstream data downloads:
+
+- **IJCAI:** [Tianchi](https://tianchi.aliyun.com/dataset/42).
+- **Yelp:** [KHGT data](https://github.com/akaxlh/KHGT/tree/master/Datasets/Yelp).
+- **Retail:** [PBAT download](https://drive.google.com/file/d/1Ki8ibuTgkxnBITCe4gNLtrR0mG1vxevl/view?usp=sharing).
+
+These source files require preprocessing and are not the frozen `dataset.pkl`
+artifacts expected by the training commands. Format, checksums, and access
+details: [data/README.md](data/README.md).
 
 ### Train and Evaluate
 

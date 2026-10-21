@@ -1,7 +1,8 @@
 # Data
 
-Training requires the frozen datasets used in Table 2. A public download
-link is not yet available. If you have obtained `EPPM_datasets.zip`, extract it
+Training requires the frozen datasets used in Table 2. Upstream source links
+are listed below; the frozen artifacts do not yet have a public download link.
+If you have obtained `EPPM_datasets.zip`, extract it
 into the repository root to create
 `data/canonical/{ijcai,yelp,retail}/dataset.pkl`.
 
@@ -45,10 +46,21 @@ Matching only the dataset name, vocabulary sizes, or split counts is not enough.
 
 ## Sources
 
-IJCAI originates from the IJCAI-15 repeat-buyer interaction data distributed
-through [Tianchi](https://tianchi.aliyun.com/dataset/42). Yelp uses the KHGT
-timestamp-matrix release, with negative, neutral, positive and tip behaviors.
-Retail retains its source-specific filtering and chronological conversion.
+| Dataset | Upstream access | Contents |
+|---|---|---|
+| IJCAI | [Tianchi](https://tianchi.aliyun.com/dataset/42) | IJCAI-15 repeat-buyer source data |
+| Yelp | [KHGT Yelp directory](https://github.com/akaxlh/KHGT/tree/master/Datasets/Yelp) | `trn_neg`, `trn_neutral`, `trn_pos`, and `trn_tip` timestamp matrices |
+| Retail | [PBAT Google Drive](https://drive.google.com/file/d/1Ki8ibuTgkxnBITCe4gNLtrR0mG1vxevl/view?usp=sharing) | `retail.txt`, linked by the [PBAT authors](https://github.com/TiliaceaeSU/PBAT#dataset) |
+
+These are third-party source releases, not drop-in replacements for the frozen
+artifacts in `manifest.json`. They require the corresponding preprocessing.
+Some providers may require sign-in. The MB-STR README also lists an
+[upstream data share](https://github.com/yuanenming/mb-str#quick-start), but its
+linked cloud endpoint could not be verified during this check.
+
+Yelp uses the KHGT timestamp-matrix release, with negative, neutral, positive
+and tip behaviors. Retail retains its source-specific filtering and
+chronological conversion.
 The precise canonical artifacts, including mappings and timestamp tie order,
 are needed for the seed-controlled sampling stream.
 
