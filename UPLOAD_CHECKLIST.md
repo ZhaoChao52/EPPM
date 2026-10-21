@@ -22,5 +22,5 @@
 - Publish the data archive separately only when its redistribution is allowed.
 - Add the actual download location to the README once it exists.
 
-No repository has been created or uploaded by this preparation step. No code
-license or dataset redistribution permission is inferred from the packaging.
+Code publication does not include the datasets or checkpoints. No code license
+or dataset redistribution permission is inferred from the packaging.
