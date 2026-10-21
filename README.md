@@ -1,70 +1,33 @@
 # Explicit Post-Action Preference Modeling for Strict Next-Interaction Recommendation
 
-EPPM separates history-derived preference encoding from incorporation of the
-latest observed item-action pair. This repository contains the M-GPT
-Parallel-Expert implementation used for the **EPPM row of Table 2** on IJCAI,
-Yelp, and Retail. Baselines, transfer-backbone experiments, and ablations are
-not included.
+EPPM separates historical preference encoding from latest-anchor incorporation
+to construct an explicit post-action prediction state. This repository provides
+the M-GPT implementation for the EPPM results on IJCAI, Yelp, and Retail.
 
 ![EPPM framework](assets/framework.png)
 
 ## Contents
 
-- [Requirements](#requirements)
-- [Data](#data)
 - [Usage](#usage)
 - [Results](#results)
-- [Repository Structure](#repository-structure)
 - [Acknowledgement](#acknowledgement)
 
-## Requirements
+## Usage
 
-The primary experiments used Linux, Python 3.8.20, PyTorch 2.0.0 with CUDA 11.8,
-PyTorch Lightning 1.9.5, and NVIDIA RTX 3090 GPUs.
+### Requirements
+
+- Python 3.8
+- PyTorch 2.0.0 / CUDA 11.8
+- PyTorch Lightning 1.9.5
 
 ```bash
 conda env create -f environment.yml
 conda activate eppm
 ```
 
-Alternatively, install PyTorch first and then the remaining dependencies:
+### Data
 
-```bash
-pip install torch==2.0.0 --index-url https://download.pytorch.org/whl/cu118
-pip install -r requirements.txt
-```
-
-## Data
-
-Training requires the frozen datasets used in Table 2. Their format and
-SHA256 checksums are documented in [data/README.md](data/README.md).
-Datasets and checkpoints are not included in the Git repository. A public
-download link for the frozen data is not yet available.
-
-If you have obtained `EPPM_datasets.zip`, extract it into the repository root:
-
-On Linux:
-
-```bash
-unzip /path/to/EPPM_datasets.zip -d .
-```
-
-On Windows PowerShell:
-
-```powershell
-Expand-Archive -LiteralPath ..\EPPM_datasets.zip -DestinationPath .
-```
-
-For datasets obtained separately, the following commands verify and install
-each frozen artifact. They also verify an artifact already at its target path:
-
-```bash
-python scripts/prepare_data.py --dataset ijcai --source /path/to/ijcai/dataset.pkl
-python scripts/prepare_data.py --dataset yelp --source /path/to/yelp/dataset.pkl
-python scripts/prepare_data.py --dataset retail --source /path/to/retail/dataset.pkl
-```
-
-The resulting layout is:
+Place the processed datasets under:
 
 ```text
 data/canonical/
@@ -73,9 +36,12 @@ data/canonical/
   retail/dataset.pkl
 ```
 
-## Usage
+Data format and checksums: [data/README.md](data/README.md).
+The dataset download link is not yet available.
 
-Train EPPM and evaluate the validation-best checkpoint:
+### Train and Evaluate
+
+Each command trains EPPM and tests the validation-best checkpoint:
 
 ```bash
 python src/main.py --dataset ijcai --gpu 0
@@ -83,104 +49,24 @@ python src/main.py --dataset yelp --gpu 0
 python src/main.py --dataset retail --gpu 0
 ```
 
-Run these commands separately or assign them to different available GPUs.
-The configuration files preserve the primary seed, sampling budget, optimizer,
-warmup schedule, validation cadence, and stopping rules.
-
-| Setting | IJCAI | Yelp | Retail |
-|---|---:|---:|---:|
-| Seed / sampler seed | 2025 | 2025 | 2025 |
-| Microbatch | 256 | 512 | 512 |
-| Gradient accumulation | 2 | 1 | 1 |
-| Optimizer updates per epoch | 600 | 600 | 600 |
-| Validation interval, epochs | 2 | 1 | 1 |
-| Early-stopping patience, validation checks | 10 | 10 | 10 |
-| Maximum epochs | 300 | 300 | 300 |
-
-All runs use 307,200 sampled training anchors per epoch. Validation and testing
-rank every nonpadding item, without sampled negatives or future-behavior input.
-Observed behaviors are retained in the backbone and anchor update.
-
-Resume an interrupted run from its latest checkpoint:
+Resume training or evaluate a saved model:
 
 ```bash
-python src/main.py --dataset ijcai --gpu 0 --resume
-```
-
-Evaluate an existing validation-best checkpoint:
-
-```bash
+python src/main.py --dataset yelp --gpu 0 --resume
 python src/main.py --dataset yelp --gpu 0 --mode test
 ```
 
-Inspect the resolved configuration without loading data or starting training:
-
-```bash
-python src/main.py --dataset yelp --dry-run
-```
-
-Outputs are written to `outputs/<dataset>/seed2025/`. The default checkpoints
-are `checkpoints/best.ckpt` and `checkpoints/last.ckpt`. IJCAI saves at its
-validation cadence, so interruption can require replaying unfinished work.
-Changing hardware, libraries, or resuming a run can affect exact numerical
-agreement; the release does not promise bitwise-identical retraining.
+Configurations are in `configs/`. Outputs are saved to
+`outputs/<dataset>/seed2025/`. See [reproduction details](docs/REPRODUCIBILITY.md).
 
 ## Results
 
-Overall full-item ranking performance (Table 2):
+Table 2. Overall full-item ranking performance.
 
 ![Table 2: Overall full-item ranking performance](assets/table2.png)
 
-The unrounded reference metrics are stored in
-[results/table2_eppm.json](results/table2_eppm.json).
-
-Collect newly generated test results:
-
-```bash
-python scripts/collect_results.py
-python scripts/collect_results.py --check
-```
-
-Missing results are displayed as `TBD`; `--check` compares test outputs with
-the reference metrics at the reported precision.
-
-Run the CPU implementation tests:
-
-```bash
-python -m unittest discover -s tests -v
-```
-
 ## Acknowledgement
 
-The backbone follows *Multi-Grained Preference Enhanced Transformer for
-Multi-behavior Sequential Recommendation* (M-GPT). The data originate from the
-source-specific preprocessing described in the paper. See
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for source and redistribution notes.
-
-## Repository Structure
-
-```text
-EPPM/
-  assets/framework.png
-  configs/ijcai.yaml
-  configs/yelp.yaml
-  configs/retail.yaml
-  data/README.md
-  data/manifest.json
-  docs/REPRODUCIBILITY.md
-  results/table2_eppm.json
-  scripts/prepare_data.py
-  scripts/collect_results.py
-  src/backbone.py
-  src/data.py
-  src/eppm.py
-  src/main.py
-  src/trainer.py
-  tests/test_reproduction.py
-  environment.yml
-  requirements.txt
-```
-
-See [Reproducibility](docs/REPRODUCIBILITY.md) for checkpoint selection,
-input-window behavior, and tests. The framework image
-shows the general method; this repository implements only its M-GPT instance.
+Our implementation builds on M-GPT, *Multi-Grained Preference Enhanced
+Transformer for Multi-behavior Sequential Recommendation*.
+See [source notices](THIRD_PARTY_NOTICES.md).
