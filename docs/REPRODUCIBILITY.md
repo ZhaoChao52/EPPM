@@ -20,7 +20,8 @@ python -m unittest discover -s tests -v
 The first command prints configuration only. The second runs the CPU tests
 using small synthetic fixtures.
 
-After verifying the datasets, run the training commands in the README on an
+Run `python scripts/extract_data.py` to install and verify the included frozen
+datasets. Then run the training commands in the README on an
 available CUDA GPU. The primary experiments used Linux. Windows can be used
 for inspection and CPU tests, but identical performance on Windows is not
 certified.

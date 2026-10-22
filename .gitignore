@@ -11,4 +11,5 @@ data/canonical/
 .env
 .env.*
 *.zip
+!data/archives/*.zip
 .DS_Store

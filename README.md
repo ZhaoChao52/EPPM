@@ -27,7 +27,14 @@ conda activate eppm
 
 ### Data
 
-Place the processed datasets under:
+Processed datasets are included in [data/archives](data/archives). After
+downloading the repository, extract and verify all three datasets:
+
+```bash
+python scripts/extract_data.py
+```
+
+This creates:
 
 ```text
 data/canonical/
@@ -36,7 +43,9 @@ data/canonical/
   retail/dataset.pkl
 ```
 
-Upstream data downloads:
+Data format and checksums: [data/README.md](data/README.md).
+
+Upstream sources:
 
 - **IJCAI:** [Tianchi](https://tianchi.aliyun.com/dataset/42).
 - **Yelp:** [KHGT data](https://github.com/akaxlh/KHGT/tree/master/Datasets/Yelp).

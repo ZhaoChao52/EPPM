@@ -1,0 +1,42 @@
+{
+  "ijcai": {
+    "parts": [
+      {
+        "file": "ijcai.zip.part01",
+        "size_bytes": 50331648,
+        "sha256": "4bdd6e9da32f6fb092253257072a12a94875b046ff11693d2f9301b2de5fadab"
+      },
+      {
+        "file": "ijcai.zip.part02",
+        "size_bytes": 50331648,
+        "sha256": "a6dc3a58787b44e925be03895b3fe92b267b2c915688b2d94f422a8d7534f436"
+      },
+      {
+        "file": "ijcai.zip.part03",
+        "size_bytes": 24040501,
+        "sha256": "df363f7ba5b2ec845491d9f8598d635d9a7bd6f5d5c24386e4b45258a4039ffd"
+      }
+    ],
+    "archive_sha256": "36ada75fe03f2eaabf78bbdd7e9759d54603fa2e7480487ad499063db6d25480"
+  },
+  "yelp": {
+    "parts": [
+      {
+        "file": "yelp.zip",
+        "size_bytes": 3744883,
+        "sha256": "538e529f8c3be284a6762f1a6504aa0fd953d98086a517c1a4ca12e0211c16b8"
+      }
+    ],
+    "archive_sha256": "538e529f8c3be284a6762f1a6504aa0fd953d98086a517c1a4ca12e0211c16b8"
+  },
+  "retail": {
+    "parts": [
+      {
+        "file": "retail.zip",
+        "size_bytes": 22122523,
+        "sha256": "b56a06b6c62877be4ff85441606c3b63e800ed414400acf9333da768006d0687"
+      }
+    ],
+    "archive_sha256": "b56a06b6c62877be4ff85441606c3b63e800ed414400acf9333da768006d0687"
+  }
+}

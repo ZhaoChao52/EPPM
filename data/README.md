@@ -1,14 +1,27 @@
 # Data
 
-Training requires the frozen datasets used in Table 2. Upstream source links
-are listed below; the frozen artifacts do not yet have a public download link.
-If you have obtained `EPPM_datasets.zip`, extract it
-into the repository root to create
-`data/canonical/{ijcai,yelp,retail}/dataset.pkl`.
+The frozen datasets used in Table 2 are included in [archives](archives).
+Download the complete repository, then run from its root:
 
-The three files occupy approximately 314 MiB uncompressed. Full SHA256 values
-are recorded in [manifest.json](manifest.json). Dataset use and redistribution
-remain subject to the source terms.
+```bash
+python scripts/extract_data.py
+```
+
+For a single dataset:
+
+```bash
+python scripts/extract_data.py --dataset yelp
+```
+
+The script joins archive parts in order, verifies their SHA256 checksums,
+and extracts `data/canonical/{ijcai,yelp,retail}/dataset.pkl`. Existing files
+are verified rather than overwritten. Archive parts must all be present;
+individual `.part` files are not standalone ZIP files.
+
+The three files occupy approximately 314 MiB uncompressed. Dataset SHA256
+values are recorded in [manifest.json](manifest.json); archive checksums are
+in [archive_manifest.json](archive_manifest.json). Dataset use and
+redistribution remain subject to the source terms.
 
 ## Format
 
@@ -75,5 +88,5 @@ python scripts/prepare_data.py --dataset ijcai --source /path/to/converted/ijcai
 This conversion does not reconstruct the original cache from raw transactions
 and is not a replacement for the source release. A serialization or mapping
 change can produce a different checksum even when aggregate counts agree.
-The package intentionally provides no substitute raw-to-canonical procedure
-for Yelp or Retail without the original conversion provenance.
+For Yelp and Retail, use the included frozen artifacts rather than attempting
+to substitute a different upstream conversion.
